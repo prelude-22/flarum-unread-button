@@ -1,0 +1,19 @@
+{
+  "name": "prelude-22/flarum-unread-button",
+  "description": "A toolbar button with an unread-post counter for Flarum 2.",
+  "type": "flarum-extension",
+  "license": "MIT",
+  "require": {
+    "flarum/core": "^2.0"
+  },
+  "extra": {
+    "flarum-extension": {
+      "title": "Unread Button",
+      "icon": {
+        "name": "fas fa-envelope-open-text",
+        "backgroundColor": "#1677ff",
+        "color": "#ffffff"
+      }
+    }
+  }
+}
