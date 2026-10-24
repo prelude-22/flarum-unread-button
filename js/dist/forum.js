@@ -5,6 +5,7 @@
   const IndexPage = unwrap(flarum.reg.get('core', 'forum/components/IndexPage'));
   const PAGE_SIZE = 50;
   const unreadRoute = () => app.route('index', { 'filter[unread]': '1', sort: 'latest' });
+const allDiscussionsRoute = () => app.route('index', { sort: 'latest' });
   const isUnreadIndex = () => { const filter = app.search.state.params().filter || {}; return filter.unread === '1'; };
   function discussionUnreadCount(attributes) {
     const lastPostNumber = Number(attributes.lastPostNumber) || 0;
@@ -37,8 +38,8 @@
       if (!app.session.user) return;
       const count = app.cache.epimUnreadPostCount || 0;
       items.add('prelude-22-flarum-unread-button', m('a.Button', {
-        href: unreadRoute(), className: isUnreadIndex() ? 'active' : '',
-        onclick(event) { event.preventDefault(); app.search.state.clear(); m.route.set(unreadRoute()); }
+        href: isUnreadIndex() ? allDiscussionsRoute() : unreadRoute(), className: isUnreadIndex() ? 'active' : '',
+        onclick(event) { event.preventDefault(); const destination = isUnreadIndex() ? allDiscussionsRoute() : unreadRoute(); app.search.state.clear(); m.route.set(destination); }
       }, count ? 'Unread (' + count + ')' : 'Unread'), -10);
     });
   });

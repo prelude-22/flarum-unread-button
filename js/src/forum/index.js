@@ -7,6 +7,7 @@ export const extend = [];
 
 const PAGE_SIZE = 50;
 const unreadRoute = () => app.route('index', { 'filter[unread]': '1', sort: 'latest' });
+const allDiscussionsRoute = () => app.route('index', { sort: 'latest' });
 const isUnreadIndex = () => (app.search.state.params().filter || {}).unread === '1';
 
 function discussionUnreadCount(attributes) {
@@ -40,9 +41,14 @@ app.initializers.add('prelude-22-flarum-unread-button', () => {
     if (!app.session.user) return;
     const count = app.cache.epimUnreadPostCount || 0;
     items.add('prelude-22-flarum-unread-button', m('a.Button', {
-      href: unreadRoute(),
+      href: isUnreadIndex() ? allDiscussionsRoute() : unreadRoute(),
       className: isUnreadIndex() ? 'active' : '',
-      onclick(event) { event.preventDefault(); app.search.state.clear(); m.route.set(unreadRoute()); },
+      onclick(event) {
+        event.preventDefault();
+        const destination = isUnreadIndex() ? allDiscussionsRoute() : unreadRoute();
+        app.search.state.clear();
+        m.route.set(destination);
+      },
     }, count ? `Unread (${count})` : 'Unread'), 90);
   });
 });

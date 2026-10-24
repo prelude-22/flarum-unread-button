@@ -2,7 +2,7 @@
 
 A small Flarum 2 extension that adds an **Unread** button next to the discussion sort control. For signed-in users, it:
 
-- opens Flarum's native unread filter at `?filter[unread]=1&sort=latest`;
+- works as a toggle: one click opens Flarum's native unread filter at `?filter[unread]=1&sort=latest`, and the next returns to the normal latest-discussions view;
 - shows the current unread-post count;
 - never writes `is:unread` into global search;
 - stays hidden for guests.
